@@ -1,0 +1,132 @@
+.backButton {
+  margin-bottom: var(--space-4);
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .layout {
+    grid-template-columns: minmax(280px, 2fr) minmax(240px, 1fr);
+  }
+}
+
+.headerRow {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.shieldBox {
+  width: 96px;
+  height: 96px;
+  flex: none;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shieldImg {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+.name {
+  margin-bottom: var(--space-1);
+}
+
+.coloursRow {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.tagline {
+  font-style: italic;
+  margin-bottom: var(--space-6);
+}
+
+.sectionTitle {
+  font-size: 18px;
+}
+
+.traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.traitIcon {
+  margin-right: 4px;
+  vertical-align: -1px;
+}
+
+.dataGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.dataLabel {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+
+.founderButton {
+  padding: 0;
+  height: auto;
+  font-weight: 600;
+}
+
+.headAside {
+  text-align: center;
+}
+
+.headKicker {
+  text-align: center;
+}
+
+.headEntry {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.headDivider {
+  margin: var(--space-3) 0;
+}
+
+.headPhoto {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: var(--space-2) auto var(--space-3);
+}
+
+.headTitle {
+  text-align: center;
+  margin-bottom: var(--space-3);
+}

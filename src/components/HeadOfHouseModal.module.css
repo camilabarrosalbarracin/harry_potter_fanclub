@@ -1,0 +1,12 @@
+.dialog {
+  text-align: center;
+}
+
+.photo {
+  display: block;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto var(--space-3);
+}

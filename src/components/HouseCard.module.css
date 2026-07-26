@@ -1,0 +1,30 @@
+.card {
+  --hp-glow: var(--color-accent-700);
+  text-align: center;
+  overflow: hidden;
+  transition: box-shadow 0.15s ease;
+}
+
+.accent {
+  height: 3px;
+  margin: calc(var(--space-4) * -1) calc(var(--space-4) * -1) var(--space-4);
+  background: var(--hp-glow);
+  transition: height 0.15s ease;
+}
+
+.shield {
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+  margin: 0 auto var(--space-3);
+}
+
+/* Hover en el botón (no en toda la card) enciende la barra + el glow,
+   siguiendo el patrón del handoff: :has() en vez de estado en React. */
+.card:has(.button:hover) .accent {
+  height: 6px;
+}
+
+.card:has(.button:hover) {
+  box-shadow: 0 0 0 1px var(--hp-glow), 0 0 28px var(--hp-glow);
+}

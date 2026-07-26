@@ -1,0 +1,27 @@
+/* App-specific layout only — all tokens, typography and component classes
+   (.btn, .card, .dialog, .field, .tag, .nav...) come from nocturne.css. */
+
+#root {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+  padding: var(--space-8) var(--space-4) calc(var(--space-8) * 2);
+  box-sizing: border-box;
+}
+
+button {
+  font: inherit;
+}
+
+/* Color de error de formulario pedido por el handoff de diseño: un rojo
+   suave, nunca el acento (que queda reservado para estados normales). */
+.field-error {
+  color: #d97b7b;
+  font-size: 12px;
+}

@@ -1,0 +1,10 @@
+.header {
+  margin-bottom: var(--space-8);
+  max-width: 62ch;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-6);
+}
