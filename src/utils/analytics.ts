@@ -16,6 +16,9 @@ export const AnalyticsEvent = {
   SortingHatSubmitted: "Sorting Hat Form Submitted",
   ViewHouseClicked: "View House Clicked",
   BioViewed: "Bio Viewed",
+  CastRandomSpellClicked: "Cast Random Spell Clicked",
+  ProfileOpened: "Profile Opened",
+  LoggedOut: "Logged Out",
 } as const;
 
 export function trackEvent(eventName: string, eventProperties?: Record<string, unknown>): void {

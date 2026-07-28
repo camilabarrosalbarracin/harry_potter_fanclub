@@ -4,6 +4,7 @@ import type { UserProfile } from "../utils/identity";
 import { getHouseAccent } from "../data/houseContent";
 import { getHouseShield } from "../utils/houseAssets";
 import { slugifyHouseName } from "../utils/houseSlug";
+import { AnalyticsEvent, trackEvent } from "../utils/analytics";
 import { CaretDownIcon } from "./icons";
 import styles from "./ProfileModal.module.css";
 
@@ -53,7 +54,14 @@ export default function ProfileModal({ profile, onClose, onLogout }: ProfileModa
         <Link
           to={`/houses/${slugifyHouseName(profile.house.name)}`}
           className={styles.house}
-          onClick={onClose}
+          onClick={() => {
+            trackEvent(AnalyticsEvent.ViewHouseClicked, {
+              houseId: profile.house.id,
+              houseName: profile.house.name,
+              source: "profile",
+            });
+            onClose();
+          }}
         >
           {profile.house.name}
           <span className={styles.houseArrow}>

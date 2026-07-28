@@ -5,6 +5,7 @@ import { getSpells, type Spell } from "../api/wizardWorldApi";
 import { useApiList } from "../hooks/useApiList";
 import { getSpellLightColor, hasVisibleLight, isRainbowLight } from "../utils/spellLight";
 import { getSpellTypeLabel } from "../utils/spellType";
+import { AnalyticsEvent, trackEvent } from "../utils/analytics";
 import styles from "./SpellbookPage.module.css";
 
 export default function SpellbookPage() {
@@ -49,7 +50,9 @@ export default function SpellbookPage() {
   function handleCastRandom() {
     const pool = filtered.length > 0 ? filtered : spells;
     if (pool.length === 0) return;
-    setCastSpell(pool[Math.floor(Math.random() * pool.length)]);
+    const spell = pool[Math.floor(Math.random() * pool.length)];
+    trackEvent(AnalyticsEvent.CastRandomSpellClicked, { name: spell.name, type: spell.type });
+    setCastSpell(spell);
   }
 
   return (

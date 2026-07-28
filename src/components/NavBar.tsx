@@ -36,7 +36,13 @@ export default function NavBar({ houses, profile, onOpenSorting, onLogout }: Nav
     onOpenSorting();
   }
 
+  function handleProfileOpen() {
+    trackEvent(AnalyticsEvent.ProfileOpened, { page: location.pathname });
+    setProfileOpen(true);
+  }
+
   function handleLogout() {
+    trackEvent(AnalyticsEvent.LoggedOut, { page: location.pathname });
     setProfileOpen(false);
     onLogout();
   }
@@ -109,7 +115,7 @@ export default function NavBar({ houses, profile, onOpenSorting, onLogout }: Nav
         <ProfileNavItem
           profile={profile}
           isOpen={isProfileOpen}
-          onOpen={() => setProfileOpen(true)}
+          onOpen={handleProfileOpen}
           onClose={() => setProfileOpen(false)}
           onLogout={handleLogout}
         />
