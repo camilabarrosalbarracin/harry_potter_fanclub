@@ -7,6 +7,10 @@ interface UseHouseResult {
   error: string | null;
 }
 
+// Receives the house's real id (already resolved from the URL slug
+// against the list) and fetches the canonical detail from /Houses/:id. If
+// there's no id yet (the list hasn't loaded, or the slug doesn't match
+// any house), it doesn't fire any fetch.
 export function useHouse(id: string | undefined): UseHouseResult {
   const [house, setHouse] = useState<House | null>(null);
   const [loading, setLoading] = useState(true);
@@ -15,7 +19,6 @@ export function useHouse(id: string | undefined): UseHouseResult {
   useEffect(() => {
     if (!id) {
       setLoading(false);
-      setError("Missing house id in the URL");
       return;
     }
 

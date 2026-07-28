@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import type { House } from "../api/wizardWorldApi";
 import ErrorState from "../components/ErrorState";
 import { ArrowLeftIcon, SparkleIcon } from "../components/icons";
 import HeadOfHouseModal from "../components/HeadOfHouseModal";
@@ -9,6 +10,7 @@ import { getHouseAccent, getHouseTagline } from "../data/houseContent";
 import { headsOfHouse } from "../data/headsOfHouse";
 import { useHouse } from "../hooks/useHouse";
 import { getHouseShield } from "../utils/houseAssets";
+import { slugifyHouseName } from "../utils/houseSlug";
 import {
   animalWithEmoji,
   commonRoomWithEmoji,
@@ -17,20 +19,45 @@ import {
 } from "../utils/houseEmoji";
 import { getHouseHeads } from "../utils/houseHead";
 import { getPersonPhoto } from "../utils/personAssets";
+import { AnalyticsEvent, trackEvent } from "../utils/analytics";
 import styles from "./HouseDetailPage.module.css";
 
-export default function HouseDetailPage() {
-  const { id } = useParams();
+interface HouseDetailPageProps {
+  houses: House[];
+  loading: boolean;
+  error: string | null;
+}
+
+export default function HouseDetailPage({ houses, loading, error }: HouseDetailPageProps) {
+  const { slug } = useParams();
   const navigate = useNavigate();
-  const { house, loading, error } = useHouse(id);
-  // Nombre de la persona (founder o algún head) cuya bio se muestra en el
-  // modal; null = modal cerrado. Un solo estado alcanza porque solo puede
-  // haber una persona seleccionada a la vez.
+  // The already-loaded list is used only as an index to resolve the URL
+  // slug (which doesn't expose the API's raw id) against the house's real
+  // id. The detail itself is populated below with its own fetch to
+  // /Houses/:id — the list's object is never reused.
+  const houseId = houses.find((h) => slugifyHouseName(h.name) === slug)?.id;
+  const { house, loading: detailLoading, error: detailError } = useHouse(houseId);
+  // Name of the person (founder or a head) whose bio is shown in the
+  // modal; null = modal closed. A single piece of state is enough since
+  // only one person can be selected at a time.
   const [activePersonName, setActivePersonName] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!house) return;
+    trackEvent(AnalyticsEvent.PageViewed, {
+      path: `/houses/${slugifyHouseName(house.name)}`,
+      page: "house_detail",
+      houseId: house.id,
+      houseName: house.name,
+    });
+  }, [house]);
 
   if (loading) return <Loader />;
   if (error) return <ErrorState message={error} />;
-  if (!house) return null;
+  if (!houseId) return <ErrorState message="House not found" />;
+  if (detailLoading) return <Loader />;
+  if (detailError) return <ErrorState message={detailError} />;
+  if (!house) return <ErrorState message="House not found" />;
 
   const heads = getHouseHeads(house);
   const accent = getHouseAccent(house.name);
@@ -42,7 +69,7 @@ export default function HouseDetailPage() {
       <button
         type="button"
         className={`btn btn-ghost ${styles.backButton}`}
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/allhouses")}
       >
         <ArrowLeftIcon />
         All houses
@@ -84,7 +111,15 @@ export default function HouseDetailPage() {
               <button
                 type="button"
                 className={`btn btn-ghost ${styles.founderButton}`}
-                onClick={() => setActivePersonName(house.founder)}
+                onClick={() => {
+                  trackEvent(AnalyticsEvent.BioViewed, {
+                    name: house.founder,
+                    personType: "founder",
+                    houseId: house.id,
+                    houseName: house.name,
+                  });
+                  setActivePersonName(house.founder);
+                }}
               >
                 {house.founder} <span className="text-muted">(View)</span>
               </button>
@@ -125,7 +160,15 @@ export default function HouseDetailPage() {
                     <button
                       type="button"
                       className="btn btn-secondary btn-block"
-                      onClick={() => setActivePersonName(fullName)}
+                      onClick={() => {
+                        trackEvent(AnalyticsEvent.BioViewed, {
+                          name: fullName,
+                          personType: "head_of_house",
+                          houseId: house.id,
+                          houseName: house.name,
+                        });
+                        setActivePersonName(fullName);
+                      }}
                     >
                       View biography
                     </button>

@@ -1,7 +1,7 @@
-// Contenido editorial por casa que no viene de la API (acento de marca y
-// tagline), definido por el handoff de diseño. Se usa como acento puntual
-// (barra, punto, anillo, glow) — nunca como relleno grande, siguiendo la
-// regla de Nocturne de "acento como línea, no como flood".
+// Editorial content per house that doesn't come from the API (brand
+// accent and tagline), defined by the design handoff. Used as a
+// punctual accent (bar, dot, ring, glow) — never as a large fill, per
+// Nocturne's rule of "accent as a line, not a flood".
 export interface HouseVisualContent {
   accent: string;
   tagline: string;

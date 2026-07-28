@@ -11,6 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+
+# Notas y docs personales (no son parte de la app)
+docs/
 
 # Editor directories and files
 .vscode/*

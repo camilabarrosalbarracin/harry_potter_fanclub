@@ -1,0 +1,64 @@
+.header {
+  margin-bottom: var(--space-6);
+  max-width: 62ch;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.searchInput {
+  flex: 2;
+  min-width: 220px;
+}
+
+.controls select {
+  flex: 1;
+  min-width: 160px;
+}
+
+.count {
+  margin-bottom: var(--space-3);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  gap: var(--space-2);
+}
+
+/* Its own row under the title instead of squeezed next to it — long
+   labels like "One of a Kind" used to stretch/deform the card header. */
+.difficultyBadge {
+  align-self: flex-start;
+}
+
+.ingredients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.inventor {
+  font-size: 12px;
+  margin: 0;
+}

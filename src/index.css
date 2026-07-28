@@ -19,8 +19,8 @@ button {
   font: inherit;
 }
 
-/* Color de error de formulario pedido por el handoff de diseño: un rojo
-   suave, nunca el acento (que queda reservado para estados normales). */
+/* Form error color requested by the design handoff: a soft red, never the
+   accent (which stays reserved for normal states). */
 .field-error {
   color: #d97b7b;
   font-size: 12px;

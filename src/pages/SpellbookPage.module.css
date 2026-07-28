@@ -1,0 +1,76 @@
+.header {
+  margin-bottom: var(--space-6);
+  max-width: 62ch;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.searchInput {
+  flex: 2;
+  min-width: 220px;
+}
+
+.controls select {
+  flex: 1;
+  min-width: 160px;
+}
+
+.castCard {
+  margin-bottom: var(--space-6);
+}
+
+.count {
+  margin-bottom: var(--space-3);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  gap: var(--space-2);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.incantation {
+  font-style: italic;
+  color: var(--color-accent);
+  margin: 0;
+}
+
+.lightSwatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid var(--color-divider);
+}
+
+.lightRainbow {
+  background: conic-gradient(red, orange, yellow, green, blue, violet, red);
+}

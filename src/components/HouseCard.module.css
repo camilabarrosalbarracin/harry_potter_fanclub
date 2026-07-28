@@ -13,14 +13,26 @@
 }
 
 .shield {
-  width: 88px;
-  height: 88px;
+  width: 112px;
+  height: 112px;
   object-fit: contain;
   margin: 0 auto var(--space-3);
 }
 
-/* Hover en el botón (no en toda la card) enciende la barra + el glow,
-   siguiendo el patrón del handoff: :has() en vez de estado en React. */
+.button {
+  display: inline-block;
+  color: var(--color-accent);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  text-decoration: underline;
+}
+
+/* Hovering the button (not the whole card) lights up the bar + the glow,
+   following the handoff's pattern: :has() instead of React state. */
 .card:has(.button:hover) .accent {
   height: 6px;
 }

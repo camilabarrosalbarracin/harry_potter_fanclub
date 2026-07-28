@@ -13,8 +13,8 @@ export function useHouses(): UseHousesResult {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Evita setear estado si el componente se desmontó antes de que
-    // resuelva el fetch (ej. navegación rápida a otra página).
+    // Avoids setting state if the component unmounted before the fetch
+    // resolves (e.g. a quick navigation to another page).
     let cancelled = false;
 
     setLoading(true);

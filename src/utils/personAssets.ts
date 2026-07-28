@@ -1,7 +1,7 @@
-// Mismo patrón que houseAssets.ts: import.meta.glob para que el build no
-// rompa mientras src/assets/people/ esté vacía o incompleta. El nombre de
-// archivo esperado es el nombre completo de la persona en kebab-case y
-// sin acentos (ver slugify), ej. "Minerva McGonagall" -> "minerva-mcgonagall.png".
+// Same pattern as houseAssets.ts: import.meta.glob so the build doesn't
+// break while src/assets/people/ is empty or incomplete. The expected file
+// name is the person's full name in kebab-case with no accents (see
+// slugify), e.g. "Minerva McGonagall" -> "minerva-mcgonagall.png".
 const photoModules = import.meta.glob<{ default: string }>(
   "../assets/people/*.{png,jpg,jpeg,svg,webp}",
   { eager: true }

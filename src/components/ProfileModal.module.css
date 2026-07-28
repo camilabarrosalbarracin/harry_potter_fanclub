@@ -1,0 +1,106 @@
+.dialog {
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Same "accent as a line" pattern as HouseCard — a thin colored strip
+   themed to the person's house, not a big colored flood. */
+.accentBar {
+  height: 4px;
+  margin: calc(var(--space-4) * -1) calc(var(--space-4) * -1) var(--space-4);
+  background: var(--hp-glow);
+}
+
+.closeButton {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  background: none;
+  border: none;
+  color: var(--color-text);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* Radial tint behind the shield, themed to the house — same idea as the
+   navbar avatar's tinted background, just softer since it's a big modal. */
+.shieldGlow {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-3) 0;
+  margin: 0 0 var(--space-2);
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--hp-glow) 20%, transparent) 0%,
+    transparent 70%
+  );
+}
+
+.shield {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px var(--hp-glow));
+}
+
+/* Pill-styled link, not plain text — border + tinted hover fill so it
+   reads as a button. align-self overrides the flex-column stretch that
+   ".dialog" applies to its children by default, so the pill stays
+   compact and centered instead of spanning the full width. */
+.house {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px var(--space-3);
+  margin: 0 0 var(--space-4);
+  border-radius: 999px;
+  border: 1px solid var(--hp-glow);
+  color: var(--hp-glow);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.house:hover {
+  background: color-mix(in srgb, var(--hp-glow) 15%, transparent);
+}
+
+.houseArrow {
+  display: inline-flex;
+  transform: rotate(-90deg);
+}
+
+/* Themed hover instead of the generic secondary gray, same pattern as
+   HouseCard's house-colored hover glow. Doubled class to reliably win
+   specificity over the global ".btn-secondary:hover" rule regardless of
+   CSS load order. */
+.logoutButton.logoutButton:hover {
+  border-color: var(--hp-glow);
+  color: var(--hp-glow);
+  background: color-mix(in srgb, var(--hp-glow) 10%, transparent);
+}
+
+.details {
+  text-align: left;
+  margin: 0 0 var(--space-4);
+}
+
+.details dt {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: color-mix(in srgb, var(--color-text) 60%, transparent);
+}
+
+.details dd {
+  margin: 0 0 var(--space-3);
+  font-size: 14px;
+}
+
+.details dd:last-child {
+  margin-bottom: 0;
+}

@@ -1,32 +1,54 @@
-# React + TypeScript + Vite
+# Harry Potter Fan Club
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A companion web app for a Harry Potter fan club: new members take a Sorting Hat quiz to discover their Hogwarts house, then browse all four houses — traits, founders, heads of house — with every interaction instrumented in Amplitude.
 
-Currently, two official plugins are available:
+Built for the Minders Solutions Architect Challenge.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Sorting Hat quiz** — assigns a house from name + email via a deterministic algorithm (same email always sorts into the same house).
+- **Deterministic user identity** — the Amplitude `user_id` is a SHA-256 hash of the normalized email, so the same person always resolves to the same user in Amplitude, regardless of device.
+- **House browsing** — list of all houses and a detail page per house (founder, heads of house, traits, common room), consuming the [Wizard World API](https://wizard-world-api.herokuapp.com).
+- **Spellbook** and **Potions Cabinet** — searchable/filterable browsing of spells and potions from the same API.
+- **Amplitude analytics** — full page-view coverage plus 5 interaction events (clicks + form submit).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech stack
 
-## Expanding the Oxlint configuration
+- **React 19 + Vite** — SPA, no server-side rendering.
+- **React Router** — client-side routing (`/home`, `/allhouses`, `/houses/:slug`, `/spellbook`, `/potions`).
+- **Amplitude Browser SDK** (`@amplitude/unified`) — 100% client-side instrumentation, no backend.
+- **TypeScript**, **Oxlint**.
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+There is no backend in this project by design.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## Getting started
+
+```bash
+npm install
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Create a `.env` file in the project root with your Amplitude API key:
+
+```bash
+VITE_AMPLITUDE_API_KEY=your_amplitude_api_key
+```
+
+Then:
+
+```bash
+npm run dev       # start the dev server
+npm run build     # type-check + production build
+npm run lint      # oxlint
+npm run preview   # preview a production build locally
+```
+
+## Routes
+
+| Path | Page |
+|---|---|
+| `/` | Redirects to `/home` |
+| `/home` | Landing page |
+| `/allhouses` | All houses + "Discover your house" |
+| `/houses/:slug` | House detail |
+| `/spellbook` | Spellbook |
+| `/potions` | Potions Cabinet |

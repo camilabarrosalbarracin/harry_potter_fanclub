@@ -1,8 +1,9 @@
-// Bio estática por persona (Head of House y founder), ya que la API no
-// trae descripción ni foto de ninguno de los dos. Key = "firstName
-// lastName" tal como vienen esos campos en /Houses (heads) o el string de
-// `founder`, para poder buscar por el nombre que ya devuelve el fetch.
-// Datos verificados contra el Harry Potter Wiki (harrypotter.fandom.com).
+// Static bio per person (Head of House and founder), since the API
+// doesn't bring a description or photo for either. Key = "firstName
+// lastName" exactly as those fields come from /Houses (heads), or the
+// `founder` string, so it can be looked up by the name the fetch already
+// returns. Data verified against the Harry Potter Wiki
+// (harrypotter.fandom.com).
 export const headsOfHouse: Record<string, string> = {
   "Minerva McGonagall":
     "Head of Gryffindor House and Transfiguration teacher. An Animagus (she turns into a tabby cat), strict but fair, and after the Battle of Hogwarts she becomes headmistress of the school.",

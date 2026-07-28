@@ -1,6 +1,6 @@
 export type HouseName = "Gryffindor" | "Slytherin" | "Hufflepuff" | "Ravenclaw";
 
-// El orden importa: define el mapeo de totalLetras % 4 -> casa.
+// Order matters: defines the totalLetters % 4 -> house mapping.
 const HOUSES_BY_REMAINDER: HouseName[] = [
   "Gryffindor",
   "Slytherin",
@@ -8,9 +8,11 @@ const HOUSES_BY_REMAINDER: HouseName[] = [
   "Ravenclaw",
 ];
 
-// Pura y determinística a propósito: mismo nombre + apellido siempre da la
-// misma casa, y es fácil de testear sin mockear nada.
-export function getHouseFromName(nombre: string, apellido: string): HouseName {
-  const totalLetras = `${nombre}${apellido}`.replace(/\s/g, "").length;
-  return HOUSES_BY_REMAINDER[totalLetras % 4];
+// Pure and deterministic on purpose: based on the email (not the name) so
+// the same person always gets the same house, no matter how they spell
+// their name in the form each time they go through the Sorting Hat.
+export function getHouseFromEmail(email: string): HouseName {
+  const normalized = email.trim().toLowerCase();
+  const totalLetters = normalized.replace(/\s/g, "").length;
+  return HOUSES_BY_REMAINDER[totalLetters % 4];
 }

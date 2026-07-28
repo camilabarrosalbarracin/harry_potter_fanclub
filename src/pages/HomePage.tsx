@@ -1,52 +1,95 @@
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import type { House } from "../api/wizardWorldApi";
-import ErrorState from "../components/ErrorState";
-import HouseCard from "../components/HouseCard";
-import Loader from "../components/Loader";
-import { getUserProfile, wasSortingHatShownThisSession } from "../utils/identity";
+import {
+  getUserProfile,
+  wasSortingHatShownThisSession,
+  type UserProfile,
+} from "../utils/identity";
 import styles from "./HomePage.module.css";
 
 interface HomePageProps {
   houses: House[];
   loading: boolean;
   error: string | null;
-  onAutoOpenSorting: () => void;
+  profile: UserProfile | null;
+  onOpenSorting: () => void;
 }
 
-export default function HomePage({ houses, loading, error, onAutoOpenSorting }: HomePageProps) {
+// Overview of everything the fan club offers, based on the real Wizard
+// World API resources.
+interface ExploreSection {
+  title: string;
+  emoji: string;
+  description: string;
+  href: string;
+}
+
+const EXPLORE_SECTIONS: ExploreSection[] = [
+  {
+    title: "Houses",
+    emoji: "🏰",
+    description:
+      "Take the Sorting Hat quiz and browse the four houses of Hogwarts — traits, founders, heads of house and common rooms.",
+    href: "/allhouses",
+  },
+  {
+    title: "Spellbook",
+    emoji: "🪄",
+    description:
+      "Browse iconic spells and charms with their incantation, effect and type — from Alohomora to Expecto Patronum.",
+    href: "/spellbook",
+  },
+  {
+    title: "Potions Cabinet",
+    emoji: "🧪",
+    description:
+      "Explore famous potions and elixirs, their ingredients, difficulty level and the wizards who invented them.",
+    href: "/potions",
+  },
+];
+
+export default function HomePage({ houses, loading, error, profile, onOpenSorting }: HomePageProps) {
   const hasAutoOpened = useRef(false);
 
-  // Solo se dispara una vez, y solo si el usuario sigue anónimo (sin
-  // userProfile) y no lo cerró ya dentro de esta misma sesión de pestaña.
-  // Espera a que las casas hayan cargado porque el modal las necesita
-  // para resolver el id de la casa asignada al llegar al resultado.
+  // Only fires once, and only if the user is still anonymous (no
+  // userProfile) and hasn't already dismissed it in this same tab session.
+  // Waits for the houses to load because the modal needs them to resolve
+  // the assigned house's id when it reaches the result.
   useEffect(() => {
     if (hasAutoOpened.current || loading || error || houses.length === 0) return;
     if (getUserProfile() || wasSortingHatShownThisSession()) return;
     hasAutoOpened.current = true;
-    onAutoOpenSorting();
-  }, [loading, error, houses, onAutoOpenSorting]);
+    onOpenSorting();
+  }, [loading, error, houses, onOpenSorting]);
 
   return (
     <main className="page">
       <header className={styles.header}>
-        <h1>Houses of Hogwarts</h1>
+        <h1>{profile ? `Welcome, ${profile.firstName} ⚡` : "Welcome, fellow wizard ⚡"}</h1>
         <p className="text-muted">
-          Four houses, four legends. Discover the values, founders and souls that define each
-          one, ever since the Sorting Hat first spoke their name.
+          Your companion to the Wizarding World. Take the Sorting Hat quiz to discover your
+          Hogwarts house, and explore everything else the fan club has to offer below.
         </p>
       </header>
 
-      {loading && <Loader />}
-      {error && <ErrorState message={error} />}
-
-      {!loading && !error && (
-        <div className={styles.grid}>
-          {houses.map((house) => (
-            <HouseCard key={house.id} house={house} />
+      <section className={styles.exploreSection}>
+        <h2 className={styles.sectionTitle}>What you'll find here</h2>
+        <div className={styles.exploreGrid}>
+          {EXPLORE_SECTIONS.map((section) => (
+            <Link
+              key={section.title}
+              to={section.href}
+              className={`card elev-sm ${styles.exploreCard}`}
+            >
+              <div className="card-title">
+                {section.title} {section.emoji}
+              </div>
+              <p className="card-body">{section.description}</p>
+            </Link>
           ))}
         </div>
-      )}
+      </section>
     </main>
   );
 }

@@ -23,14 +23,14 @@ export default function HeadOfHouseModal({ name, bio, onClose }: HeadOfHouseModa
         aria-modal="true"
         onClick={stopPropagation}
       >
+        <button type="button" aria-label="Close" className={styles.closeButton} onClick={onClose}>
+          ×
+        </button>
         {photo && <img src={photo} alt={name} className={styles.photo} />}
         <div className="dialog-title">{name}</div>
         <div className="dialog-body">
           {bio ?? "No bio available for this character yet."}
         </div>
-        <button type="button" className="btn btn-secondary btn-block" onClick={onClose}>
-          Close
-        </button>
       </div>
     </div>
   );

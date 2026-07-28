@@ -1,8 +1,10 @@
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import type { House } from "../api/wizardWorldApi";
-import { getHouseAccent } from "../data/houseContent";
+import { getHouseAccent, getHouseTagline } from "../data/houseContent";
 import { getHouseShield } from "../utils/houseAssets";
+import { slugifyHouseName } from "../utils/houseSlug";
+import { AnalyticsEvent, trackEvent } from "../utils/analytics";
 import styles from "./HouseCard.module.css";
 
 interface HouseCardProps {
@@ -18,9 +20,19 @@ export default function HouseCard({ house }: HouseCardProps) {
       <div className={styles.accent} />
       {shield && <img src={shield} alt={`${house.name} crest`} className={styles.shield} />}
       <div className="card-title">{house.name}</div>
-      <p className="card-body">{house.houseColours}</p>
-      <Link to={`/houses/${house.id}`} className={`btn btn-secondary btn-block ${styles.button}`}>
-        View house
+      <p className="card-body">{getHouseTagline(house.name)}</p>
+      <Link
+        to={`/houses/${slugifyHouseName(house.name)}`}
+        className={styles.button}
+        onClick={() =>
+          trackEvent(AnalyticsEvent.ViewHouseClicked, {
+            houseId: house.id,
+            houseName: house.name,
+            source: "home_card",
+          })
+        }
+      >
+        View
       </Link>
     </article>
   );

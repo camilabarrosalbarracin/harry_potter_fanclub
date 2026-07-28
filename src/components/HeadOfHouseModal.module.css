@@ -1,5 +1,19 @@
 .dialog {
+  position: relative;
   text-align: center;
+}
+
+.closeButton {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  background: none;
+  border: none;
+  color: var(--color-text);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
 }
 
 .photo {

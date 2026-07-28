@@ -1,8 +1,8 @@
-// Mapea texto que ya viene de la API (animal, elemento) a un emoji
-// acorde, y agrega emojis fijos por casa para fantasma/sala común, según
-// el mapeo pedido por el handoff de diseño. Matching por palabra clave en
-// vez de por casa: animal/elemento son estables entre houses pero el
-// texto exacto de commonRoom puede variar más (ver ghost/commonRoom).
+// Maps text that already comes from the API (animal, element) to a
+// matching emoji, and adds fixed per-house emojis for ghost/common room,
+// per the mapping requested by the design handoff. Matching by keyword
+// instead of by house: animal/element are stable across houses, but the
+// exact commonRoom text can vary more (see ghost/commonRoom).
 const ANIMAL_EMOJI: Array<[RegExp, string]> = [
   [/lion/i, "🦁"],
   [/eagle/i, "🦅"],
@@ -17,9 +17,9 @@ const ELEMENT_EMOJI: Array<[RegExp, string]> = [
   [/air/i, "💨"],
 ];
 
-// La sala común de cada casa no comparte una palabra clave común en el
-// texto que devuelve la API (ej. Hufflepuff -> "Hufflepuff Basement"), así
-// que este mapeo va por nombre de casa en vez de por contenido.
+// Each house's common room doesn't share a common keyword in the text the
+// API returns (e.g. Hufflepuff -> "Hufflepuff Basement"), so this mapping
+// goes by house name instead of by content.
 const COMMON_ROOM_EMOJI: Record<string, string> = {
   Gryffindor: "🏰",
   Ravenclaw: "🏰",

@@ -3,8 +3,29 @@
   max-width: 62ch;
 }
 
-.grid {
+.sectionTitle {
+  font-size: 18px;
+  margin-bottom: var(--space-4);
+}
+
+.exploreSection {
+  margin-bottom: var(--space-8);
+}
+
+.exploreGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: var(--space-6);
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .exploreGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Cards are <Link>s — reset the default anchor underline/color. */
+.exploreCard {
+  text-decoration: none;
+  color: inherit;
 }

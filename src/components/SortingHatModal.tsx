@@ -1,11 +1,13 @@
 import { useEffect, useState, type FormEvent, type MouseEvent } from "react";
+import { useLocation } from "react-router-dom";
 import sortingHatImg from "../assets/sorting-hat.png";
 import type { House } from "../api/wizardWorldApi";
 import Loader from "./Loader";
 import { getHouseTagline } from "../data/houseContent";
 import { getHouseShield } from "../utils/houseAssets";
-import { getHouseFromName } from "../utils/sortingAlgorithm";
-import { createUserProfile, dismissSortingHat } from "../utils/identity";
+import { getHouseFromEmail } from "../utils/sortingAlgorithm";
+import { createUserProfile, dismissSortingHat, getUserProfile } from "../utils/identity";
+import { AnalyticsEvent, identifyUser, resetIdentity, trackEvent } from "../utils/analytics";
 import styles from "./SortingHatModal.module.css";
 
 interface SortingHatModalProps {
@@ -15,9 +17,9 @@ interface SortingHatModalProps {
 
 type Stage = "intro" | "form" | "loading" | "result";
 
-// Pausa ceremonial entre enviar el formulario y mostrar el resultado — le
-// da al paso "loading" tiempo de mostrarse en vez de saltar instantáneo
-// (el cálculo en sí es local e inmediato).
+// Ceremonial pause between submitting the form and showing the result —
+// gives the "loading" stage time to actually show instead of jumping
+// straight through (the calculation itself is local and instant).
 const SORTING_DELAY_MS = 1600;
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -33,6 +35,7 @@ function stopPropagation(event: MouseEvent) {
 }
 
 export default function SortingHatModal({ houses, onClose }: SortingHatModalProps) {
+  const location = useLocation();
   const [stage, setStage] = useState<Stage>("intro");
   const [form, setForm] = useState<FormState>({ nombre: "", apellido: "", email: "" });
   const [errors, setErrors] = useState<Partial<FormState>>({});
@@ -59,8 +62,14 @@ export default function SortingHatModal({ houses, onClose }: SortingHatModalProp
     event.preventDefault();
     if (!validate()) return;
 
-    const houseName = getHouseFromName(form.nombre.trim(), form.apellido.trim());
+    const houseName = getHouseFromEmail(form.email.trim());
     const house = houses.find((h) => h.name === houseName) ?? null;
+    const isRetake = Boolean(getUserProfile());
+    trackEvent(AnalyticsEvent.SortingHatSubmitted, {
+      house: houseName,
+      page: location.pathname,
+      isRetake,
+    });
     setAssignedHouse(house);
     setStage("loading");
   }
@@ -76,16 +85,25 @@ export default function SortingHatModal({ houses, onClose }: SortingHatModalProp
     onClose();
   }
 
-  // Recién acá se persiste el perfil: se guarda "al cerrar" desde el
-  // resultado positivo, no apenas se calcula la casa.
-  function handleCloseResult() {
+  function handleNotNow() {
+    trackEvent(AnalyticsEvent.SortingHatNotNowClicked, { page: location.pathname });
+    handleDismiss();
+  }
+
+  // The profile is only persisted here: it's saved "on close" from the
+  // positive result, not as soon as the house is calculated.
+  async function handleCloseResult() {
     if (assignedHouse) {
-      createUserProfile({
+      // Cuts any link to whoever used this device before (same device_id,
+      // different person) before identifying the new profile.
+      resetIdentity();
+      const profile = await createUserProfile({
         firstName: form.nombre.trim(),
         lastName: form.apellido.trim(),
         email: form.email.trim(),
         house: { id: assignedHouse.id, name: assignedHouse.name },
       });
+      identifyUser(profile);
     }
     onClose();
   }
@@ -101,7 +119,7 @@ export default function SortingHatModal({ houses, onClose }: SortingHatModalProp
             decide which of the four houses you belong to.
           </div>
           <div className="dialog-actions">
-            <button type="button" className="btn btn-secondary" onClick={handleDismiss}>
+            <button type="button" className="btn btn-secondary" onClick={handleNotNow}>
               Not now
             </button>
             <button type="button" className="btn btn-primary" onClick={() => setStage("form")}>

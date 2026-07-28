@@ -1,7 +1,7 @@
-// import.meta.glob (en vez de imports directos por nombre de archivo) para
-// que el build no rompa si falta algún escudo en src/assets/houses/: cada
-// archivo que se agregue ahí se incorpora automáticamente al mapa, sin
-// tocar este archivo.
+// import.meta.glob (instead of direct imports by file name) so the build
+// doesn't break if a shield is missing from src/assets/houses/: any file
+// added there gets picked up into the map automatically, without touching
+// this file.
 const shieldModules = import.meta.glob<{ default: string }>(
   "../assets/houses/*.{png,jpg,jpeg,svg,webp}",
   { eager: true }
@@ -13,8 +13,9 @@ for (const path in shieldModules) {
   shieldsByFileName[fileName.toLowerCase()] = shieldModules[path].default;
 }
 
-// Preferimos la versión "-crest" (fondo transparente) sobre la de fondo
-// blanco, ya que las cards ahora tienen fondo oscuro (--color-surface).
+// We prefer the "-crest" version (transparent background) over the white
+// background one, since the cards now have a dark background
+// (--color-surface).
 export function getHouseShield(houseName: string): string | undefined {
   const slug = houseName.toLowerCase();
   return shieldsByFileName[`${slug}-crest`] ?? shieldsByFileName[slug];
