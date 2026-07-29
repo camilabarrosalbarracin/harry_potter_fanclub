@@ -7,7 +7,7 @@ interface UseApiListResult<T> {
 }
 
 // Same loading/error pattern as useHouses, generalized for "fetch a full
-// list once" — avoids repeating the boilerplate for Spells/Elixirs.
+// list once", avoiding repeated boilerplate for Spells/Elixirs.
 // Callers must pass a stable function reference (a module-level export,
 // not an inline arrow) so the dependency array below doesn't refire on
 // every render.

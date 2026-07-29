@@ -4,7 +4,7 @@
   overflow: hidden;
 }
 
-/* Same "accent as a line" pattern as HouseCard — a thin colored strip
+/* Same "accent as a line" pattern as HouseCard: a thin colored strip
    themed to the person's house, not a big colored flood. */
 .accentBar {
   height: 4px;
@@ -25,7 +25,7 @@
   padding: 4px;
 }
 
-/* Radial tint behind the shield, themed to the house — same idea as the
+/* Radial tint behind the shield, themed to the house, same idea as the
    navbar avatar's tinted background, just softer since it's a big modal. */
 .shieldGlow {
   display: flex;
@@ -46,7 +46,7 @@
   filter: drop-shadow(0 0 10px var(--hp-glow));
 }
 
-/* Pill-styled link, not plain text — border + tinted hover fill so it
+/* Pill-styled link, not plain text: border + tinted hover fill so it
    reads as a button. align-self overrides the flex-column stretch that
    ".dialog" applies to its children by default, so the pill stays
    compact and centered instead of spanning the full width. */

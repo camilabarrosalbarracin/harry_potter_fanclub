@@ -24,7 +24,7 @@
   }
 }
 
-/* Cards are <Link>s — reset the default anchor underline/color. */
+/* Cards are <Link>s: reset the default anchor underline/color. */
 .exploreCard {
   text-decoration: none;
   color: inherit;

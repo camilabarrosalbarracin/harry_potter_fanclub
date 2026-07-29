@@ -30,14 +30,14 @@ const EXPLORE_SECTIONS: ExploreSection[] = [
     title: "Houses",
     emoji: "🏰",
     description:
-      "Take the Sorting Hat quiz and browse the four houses of Hogwarts — traits, founders, heads of house and common rooms.",
+      "Take the Sorting Hat quiz and browse the four houses of Hogwarts: traits, founders, heads of house and common rooms.",
     href: "/allhouses",
   },
   {
     title: "Spellbook",
     emoji: "🪄",
     description:
-      "Browse iconic spells and charms with their incantation, effect and type — from Alohomora to Expecto Patronum.",
+      "Browse iconic spells and charms with their incantation, effect and type, from Alohomora to Expecto Patronum.",
     href: "/spellbook",
   },
   {

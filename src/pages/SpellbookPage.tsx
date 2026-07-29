@@ -15,7 +15,7 @@ export default function SpellbookPage() {
   const [castSpell, setCastSpell] = useState<Spell | null>(null);
 
   // Only spells that have every attribute the card actually shows (name,
-  // incantation, effect, a real type, and a visible light) — partial
+  // incantation, effect, a real type, and a visible light). Partial
   // records are left out instead of showing gaps like "Effect unknown.".
   const spells = useMemo(
     () =>

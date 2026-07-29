@@ -1,7 +1,7 @@
 /* Double class to win specificity over the global ".nav a" rule (font-size
    14px) so the brand-as-link keeps its 18px size. Also cancels out
    ".nav-brand"'s margin-right:auto: that auto-margin used to push
-   EVERYTHING after it against the right edge — now the whole nav group
+   EVERYTHING after it against the right edge. Now the whole nav group
    stays grouped on the left, next to the brand. */
 .brandLink.brandLink {
   font-size: 18px;
@@ -23,14 +23,14 @@
   position: relative;
 }
 
-/* The one primary CTA of the bar — pushed to the far right, separate from
+/* The one primary CTA of the bar, pushed to the far right, separate from
    the plain nav links. Once identified, this slot is replaced by the
    profile avatar below (same positioning). */
 .discoverButton {
   margin-left: auto;
 }
 
-/* Profile avatar — the house crest doubles as the "you're signed in" icon.
+/* Profile avatar: the house crest doubles as the "you're signed in" icon.
    The background is tinted with the house color too (not just the ring),
    so the house is visible at a glance even before the crest image loads. */
 .avatarButton {

@@ -1,6 +1,6 @@
 // Editorial content per house that doesn't come from the API (brand
 // accent and tagline), defined by the design handoff. Used as a
-// punctual accent (bar, dot, ring, glow) — never as a large fill, per
+// punctual accent (bar, dot, ring, glow), never as a large fill, per
 // Nocturne's rule of "accent as a line, not a flood".
 export interface HouseVisualContent {
   accent: string;

@@ -12,8 +12,8 @@ export default function PotionsPage() {
   const [difficultyFilter, setDifficultyFilter] = useState("");
 
   // Only potions with every attribute the card actually shows (name,
-  // effect, a real difficulty, at least one ingredient and one inventor) —
-  // partial records are left out instead of showing empty sections.
+  // effect, a real difficulty, at least one ingredient and one inventor).
+  // Partial records are left out instead of showing empty sections.
   const elixirs = useMemo(
     () =>
       allElixirs.filter(
@@ -46,7 +46,7 @@ export default function PotionsPage() {
       <header className={styles.header}>
         <h1>The Potions Cabinet 🧪</h1>
         <p className="text-muted">
-          From Polyjuice to Felix Felicis — every potion has a difficulty, a list of
+          From Polyjuice to Felix Felicis, every potion has a difficulty, a list of
           ingredients, and sometimes a name attached to whoever brewed it first.
         </p>
       </header>

@@ -17,7 +17,7 @@ interface SortingHatModalProps {
 
 type Stage = "intro" | "form" | "loading" | "result";
 
-// Ceremonial pause between submitting the form and showing the result —
+// Ceremonial pause between submitting the form and showing the result:
 // gives the "loading" stage time to actually show instead of jumping
 // straight through (the calculation itself is local and instant).
 const SORTING_DELAY_MS = 1600;

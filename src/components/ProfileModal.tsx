@@ -49,7 +49,7 @@ export default function ProfileModal({ profile, onClose, onLogout }: ProfileModa
         </div>
 
         {/* Pill-styled and paired with a rotated caret so it reads as a
-           button, not plain text — same caret already used for the
+           button, not plain text: same caret already used for the
            navbar's "Houses" dropdown, just pointing sideways here. */}
         <Link
           to={`/houses/${slugifyHouseName(profile.house.name)}`}

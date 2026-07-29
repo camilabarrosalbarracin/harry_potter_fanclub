@@ -1,5 +1,5 @@
 // The API returns SpellType as PascalCase words glued together (e.g.
-// "DarkCharm", "HealingSpell") — this splits the ones that actually read
+// "DarkCharm", "HealingSpell"). This splits the ones that actually read
 // as more than one word, so they show up spaced instead of squished
 // together. Single-word values (Charm, Curse, Hex, Jinx, Vanishment...)
 // don't need an entry, they fall through to the raw value.

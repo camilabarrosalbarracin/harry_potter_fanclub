@@ -23,8 +23,8 @@ export const AnalyticsEvent = {
 
 // Returns the underlying promise (resolves once the event has actually been
 // enriched with the current device_id/user_id, not just queued) so callers
-// that need to sequence an identity change after this specific event — e.g.
-// logout — can await it instead of racing it. Fire-and-forget callers can
+// that need to sequence an identity change after this specific event (e.g.
+// logout) can await it instead of racing it. Fire-and-forget callers can
 // just ignore the return value.
 export function trackEvent(
   eventName: string,

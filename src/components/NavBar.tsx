@@ -44,7 +44,7 @@ export default function NavBar({ houses, profile, onOpenSorting, onLogout }: Nav
   // Awaits the event before resetting: trackEvent only queues the event,
   // the actual device_id/user_id enrichment happens later on the timeline,
   // so calling onLogout() (which resets the identity) right after a
-  // fire-and-forget trackEvent would race it — this event could end up
+  // fire-and-forget trackEvent would race it: this event could end up
   // stamped with the *new*, post-reset anonymous identity instead of the
   // one that's actually logging out.
   async function handleLogout() {
@@ -148,7 +148,7 @@ interface ProfileNavItemProps {
 }
 
 // The house crest doubles as the "you're signed in" avatar, ringed in the
-// person's house color — replaces "Discover your house" once identified.
+// person's house color, replacing "Discover your house" once identified.
 function ProfileNavItem({ profile, isOpen, onOpen, onClose, onLogout }: ProfileNavItemProps) {
   const shield = getHouseShield(profile.house.name);
 
