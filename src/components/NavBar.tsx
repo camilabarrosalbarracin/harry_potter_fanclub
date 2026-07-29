@@ -62,6 +62,8 @@ export default function NavBar({ houses, profile, onOpenSorting, onLogout }: Nav
         Harry Potter's Fans Club
       </Link>
 
+      <span className={styles.navBreak} aria-hidden="true" />
+
       <span className={styles.navDivider} aria-hidden="true" />
 
       <div className={styles.navItem}>

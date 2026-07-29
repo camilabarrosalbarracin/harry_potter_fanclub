@@ -14,6 +14,32 @@
   }
 }
 
+/* Phone layout: title + profile share row 1, everything else drops to
+   row 2. Pulling both to the front of source order (title first, profile
+   right after) plus .navBreak forcing a line wrap between them and the
+   rest gives two clean rows regardless of how the middle items wrap. */
+@media (max-width: 767px) {
+  .brandLink.brandLink {
+    order: -3;
+  }
+}
+
+/* Zero-height, full-width flex item: forces everything after it onto a
+   new line without adding a visible gap of its own. Classic flex-wrap
+   "row break" — inert from tablet width up, where the bar is one row. */
+.navBreak {
+  order: -1;
+  flex-basis: 100%;
+  width: 0;
+  height: 0;
+}
+
+@media (min-width: 768px) {
+  .navBreak {
+    display: none;
+  }
+}
+
 /* Separates the brand from the group of navigable pages: a bit more room
    on each side (.nav's gap already gives some, this adds more) and a
    vertical line to visually distinguish "the club's name" from
@@ -43,17 +69,9 @@
   margin-left: auto;
 }
 
-/* On phones the row wraps, so give the CTA its own full-width row instead
-   of a cramped auto-margin sliver. Excludes the round avatar button, which
-   reuses this class but must stay a fixed-size circle at every width. */
-.discoverButton:not(.avatarButton) {
-  width: 100%;
-  justify-content: center;
-}
-
-@media (min-width: 768px) {
-  .discoverButton:not(.avatarButton) {
-    width: auto;
+@media (max-width: 767px) {
+  .discoverButton {
+    order: -2;
   }
 }
 
