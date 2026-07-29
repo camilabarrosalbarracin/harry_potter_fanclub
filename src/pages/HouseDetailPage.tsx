@@ -1,7 +1,6 @@
 import type { CSSProperties } from "react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import type { House } from "../api/wizardWorldApi";
 import ErrorState from "../components/ErrorState";
 import { ArrowLeftIcon, SparkleIcon } from "../components/icons";
 import HeadOfHouseModal from "../components/HeadOfHouseModal";
@@ -23,19 +22,18 @@ import { AnalyticsEvent, trackEvent } from "../utils/analytics";
 import styles from "./HouseDetailPage.module.css";
 
 interface HouseDetailPageProps {
-  houses: House[];
+  houseIdBySlug: Record<string, string>;
   loading: boolean;
   error: string | null;
 }
 
-export default function HouseDetailPage({ houses, loading, error }: HouseDetailPageProps) {
+export default function HouseDetailPage({ houseIdBySlug, loading, error }: HouseDetailPageProps) {
   const { slug } = useParams();
   const navigate = useNavigate();
-  // The already-loaded list is used only as an index to resolve the URL
-  // slug (which doesn't expose the API's raw id) against the house's real
-  // id. The detail itself is populated below with its own fetch to
-  // /Houses/:id — the list's object is never reused.
-  const houseId = houses.find((h) => slugifyHouseName(h.name) === slug)?.id;
+  // houseIdBySlug is just an index (slug -> real API id) built in App from
+  // the already-loaded list; the detail itself is always populated below
+  // with its own fetch to /Houses/:id.
+  const houseId = slug ? houseIdBySlug[slug] : undefined;
   const { house, loading: detailLoading, error: detailError } = useHouse(houseId);
   // Name of the person (founder or a head) whose bio is shown in the
   // modal; null = modal closed. A single piece of state is enough since

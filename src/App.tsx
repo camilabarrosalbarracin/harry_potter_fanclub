@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import SortingHatModal from "./components/SortingHatModal";
 import { useHouses } from "./hooks/useHouses";
 import { clearUserProfile, getUserProfile, type UserProfile } from "./utils/identity";
 import { AnalyticsEvent, identifyUser, resetIdentity, trackEvent } from "./utils/analytics";
+import { slugifyHouseName } from "./utils/houseSlug";
 import HomePage from "./pages/HomePage";
 import AllHousesPage from "./pages/AllHousesPage";
 import HouseDetailPage from "./pages/HouseDetailPage";
@@ -43,6 +44,13 @@ function App() {
   // global: it opens both automatically and from the navbar's button, and
   // needs the houses to resolve the assigned house's id.
   const { houses, loading, error } = useHouses();
+  // Lightweight index for HouseDetailPage: only the slug -> id mapping it
+  // actually needs to resolve the URL, instead of handing it the full
+  // House objects (traits, heads, etc.) it has no use for.
+  const houseIdBySlug = useMemo(
+    () => Object.fromEntries(houses.map((h) => [slugifyHouseName(h.name), h.id])),
+    [houses]
+  );
   const [isSortingOpen, setSortingOpen] = useState(false);
   // Drives whether the navbar shows "Discover your house" or the profile
   // avatar. Re-read from localStorage when the Sorting Hat modal closes,
@@ -91,7 +99,9 @@ function App() {
         />
         <Route
           path="/houses/:slug"
-          element={<HouseDetailPage houses={houses} loading={loading} error={error} />}
+          element={
+            <HouseDetailPage houseIdBySlug={houseIdBySlug} loading={loading} error={error} />
+          }
         />
         <Route path="/spellbook" element={<SpellbookPage />} />
         <Route path="/potions" element={<PotionsPage />} />
