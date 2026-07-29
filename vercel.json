@@ -1,5 +1,9 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/home", "destination": "/index.html" },
+    { "source": "/allhouses", "destination": "/index.html" },
+    { "source": "/houses/:slug", "destination": "/index.html" },
+    { "source": "/spellbook", "destination": "/index.html" },
+    { "source": "/potions", "destination": "/index.html" }
   ]
 }
