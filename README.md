@@ -78,3 +78,7 @@ All defined in `src/utils/analytics.ts`:
 
 ## Deployed 
 Vercel: https://harry-potter-fanclub.vercel.app
+
+## Amplitud dashboard
+[here](https://app.amplitude.com/analytics/share/11083c8f6de041e597301f11d011d2bd)
+
