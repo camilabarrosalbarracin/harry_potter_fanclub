@@ -75,3 +75,6 @@ All defined in `src/utils/analytics.ts`:
 - `Cast Random Spell Clicked`
 - `Profile Opened`
 - `Logged Out`
+
+## Deployed 
+Vercel: https://harry-potter-fanclub.vercel.app
