@@ -49,12 +49,12 @@ export function identifyUser(profile: UserProfile): void {
   amplitude.identify(identity);
 }
 
-// Cuts any previous identity link on this device (setUserId to undefined +
-// a new device_id) before identifying whoever just completed the Sorting
-// Hat. Without this, if two different people use the same browser, the
-// second one could inherit the first one's user_id instead of starting
-// clean.
+// Clears the userId on logout so events tracked afterward are anonymous
+// again. The device_id is left untouched on purpose: Amplitude's own
+// identity resolution decides how to associate whoever identifies next on
+// this device, rather than this app enforcing a hard boundary between
+// people who share it.
 export function resetIdentity(): void {
   if (!TRACKING_ENABLED) return;
-  amplitude.reset();
+  amplitude.setUserId(undefined);
 }
