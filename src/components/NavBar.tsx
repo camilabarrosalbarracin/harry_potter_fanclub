@@ -41,8 +41,14 @@ export default function NavBar({ houses, profile, onOpenSorting, onLogout }: Nav
     setProfileOpen(true);
   }
 
-  function handleLogout() {
-    trackEvent(AnalyticsEvent.LoggedOut, { page: location.pathname });
+  // Awaits the event before resetting: trackEvent only queues the event,
+  // the actual device_id/user_id enrichment happens later on the timeline,
+  // so calling onLogout() (which resets the identity) right after a
+  // fire-and-forget trackEvent would race it — this event could end up
+  // stamped with the *new*, post-reset anonymous identity instead of the
+  // one that's actually logging out.
+  async function handleLogout() {
+    await trackEvent(AnalyticsEvent.LoggedOut, { page: location.pathname });
     setProfileOpen(false);
     onLogout();
   }

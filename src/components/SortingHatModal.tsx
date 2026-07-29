@@ -7,7 +7,7 @@ import { getHouseTagline } from "../data/houseContent";
 import { getHouseShield } from "../utils/houseAssets";
 import { getHouseFromEmail } from "../utils/sortingAlgorithm";
 import { createUserProfile, dismissSortingHat, getUserProfile } from "../utils/identity";
-import { AnalyticsEvent, identifyUser, resetIdentity, trackEvent } from "../utils/analytics";
+import { AnalyticsEvent, identifyUser, trackEvent } from "../utils/analytics";
 import styles from "./SortingHatModal.module.css";
 
 interface SortingHatModalProps {
@@ -94,9 +94,11 @@ export default function SortingHatModal({ houses, onClose }: SortingHatModalProp
   // positive result, not as soon as the house is calculated.
   async function handleCloseResult() {
     if (assignedHouse) {
-      // Cuts any link to whoever used this device before (same device_id,
-      // different person) before identifying the new profile.
-      resetIdentity();
+      // No reset here on purpose: this device's identity was already left
+      // clean by the last logout (or was never identified at all), so this
+      // funnel's earlier anonymous events (Discover Your House Clicked,
+      // Sorting Hat Form Submitted) share this same device_id and get
+      // merged into the profile below once identifyUser() sets the userId.
       const profile = await createUserProfile({
         firstName: form.nombre.trim(),
         lastName: form.apellido.trim(),

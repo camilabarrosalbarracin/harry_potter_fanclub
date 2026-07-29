@@ -21,9 +21,17 @@ export const AnalyticsEvent = {
   LoggedOut: "Logged Out",
 } as const;
 
-export function trackEvent(eventName: string, eventProperties?: Record<string, unknown>): void {
-  if (!TRACKING_ENABLED) return;
-  amplitude.track(eventName, eventProperties);
+// Returns the underlying promise (resolves once the event has actually been
+// enriched with the current device_id/user_id, not just queued) so callers
+// that need to sequence an identity change after this specific event — e.g.
+// logout — can await it instead of racing it. Fire-and-forget callers can
+// just ignore the return value.
+export function trackEvent(
+  eventName: string,
+  eventProperties?: Record<string, unknown>
+): Promise<void> {
+  if (!TRACKING_ENABLED) return Promise.resolve();
+  return amplitude.track(eventName, eventProperties).promise.then(() => undefined);
 }
 
 // Links the following events to the deterministic userId (email hash) and
