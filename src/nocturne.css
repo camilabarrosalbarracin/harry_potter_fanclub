@@ -101,13 +101,23 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading); font-weight: var(--font-heading-weight);
   line-height: 1.12; letter-spacing: -0.015em; margin: 0 0 var(--space-2);
 }
-h1 { font-size: 42px; }
-h2 { font-size: 32px; }
-h3 { font-size: 25px; }
-h4 { font-size: 20px; }
+/* Type ramp is mobile-first: phones get a smaller scale, tablet width up
+   (>=768px) restores the full scale (breakpoints: phone <768px, tablet
+   >=768px, desktop >=1024px). */
+h1 { font-size: 30px; }
+h2 { font-size: 24px; }
+h3 { font-size: 20px; }
+h4 { font-size: 18px; }
 h5 { font-size: 16px; }
 h6 { font-size: 13px; }
 h6 { letter-spacing: 0.08em; text-transform: uppercase; }
+
+@media (min-width: 768px) {
+  h1 { font-size: 42px; }
+  h2 { font-size: 32px; }
+  h3 { font-size: 25px; }
+  h4 { font-size: 20px; }
+}
 p { margin: 0 0 var(--space-3); }
 a { color: var(--color-accent); text-underline-offset: 3px; }
 img { display: block; max-width: 100%; }
@@ -230,11 +240,18 @@ textarea.input { min-height: 90px; resize: vertical; }
 .tag-outline { border: 1px solid var(--color-accent); color: var(--color-accent); }
 
 /* — navigation — */
+/* Mobile-first: phones don't have room for brand + links + CTA on one
+   row, so the bar wraps there; tablet width up it settles into a single
+   row (breakpoints: phone <768px, tablet >=768px, desktop >=1024px). */
 .nav {
-  display: flex; align-items: center; gap: var(--space-4);
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
   padding: var(--space-3) var(--space-4);
   background: var(--color-surface);
   box-shadow: var(--shadow-sm);
+}
+@media (min-width: 768px) {
+  .nav { flex-wrap: nowrap; }
 }
 .nav-brand {
   font-family: var(--font-heading); font-weight: var(--font-heading-weight);
